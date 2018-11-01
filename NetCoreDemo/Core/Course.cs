@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetCoreDemo.Application.EnumsType;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace NetCoreDemo.Core
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime CreationTime { get; set; }
+
+        public Grade CourseGrade { get; set; }
 
         public ICollection<Achievement> Achievements { get; set; }
     }

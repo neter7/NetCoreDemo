@@ -15,7 +15,7 @@ namespace NetCoreDemo.EntityFramework
 
         }
 
-        public NetCoreDemoDbConttext(DbContextOptions options) : base(options)
+        public NetCoreDemoDbConttext(DbContextOptions<NetCoreDemoDbConttext> options) : base(options)
         {
         }
 

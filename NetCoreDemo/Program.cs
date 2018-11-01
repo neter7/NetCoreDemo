@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NetCoreDemo.EntityFramework;
+using NetCoreDemo.EntityFramework.Data;
 
 namespace NetCoreDemo
 {
@@ -14,7 +17,28 @@ namespace NetCoreDemo
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            //CreateWebHostBuilder(args).Build().Run();
+
+            var host = CreateWebHostBuilder(args).Build();
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var context = services.GetRequiredService<NetCoreDemoDbConttext>();
+                    DbInit.Initialize(context);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetService<ILogger<Program>>();
+                    logger.LogError("爆粗啦 " + ex.Message);
+                }
+
+
+            }
+
+            host.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
